@@ -1,0 +1,1352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIPS AI 417 | Class 9 | Part A Study Hub</title>
+
+<style>
+:root{
+  --nav:#172b4d;
+  --nav2:#27496d;
+  --bg:#eef3f8;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#68748a;
+  --line:#dce3ec;
+  --accent:#3b82f6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* PASSWORD SCREEN */
+#lockScreen{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,rgba(11,25,47,.96),rgba(38,72,113,.96));
+  backdrop-filter:blur(14px);
+}
+.lockBox{
+  width:420px;
+  max-width:92%;
+  padding:42px 34px;
+  text-align:center;
+  color:white;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:24px;
+  background:rgba(255,255,255,.11);
+  box-shadow:0 24px 80px rgba(0,0,0,.4);
+}
+.lockBox .lockIcon{font-size:56px}
+.lockBox h1{margin:12px 0 6px;font-size:30px}
+.lockBox p{margin:0 0 22px;opacity:.82}
+.lockBox input{
+  width:100%;
+  border:0;
+  outline:none;
+  border-radius:12px;
+  padding:14px 15px;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.lockBox button{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#fff;
+  color:var(--nav);
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+}
+#error{
+  min-height:20px;
+  margin-top:12px;
+  color:#ffb0b0;
+  font-size:14px;
+}
+
+/* APP */
+#app{display:none}
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  min-height:78px;
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  background:var(--nav);
+  color:#fff;
+  box-shadow:0 2px 14px rgba(0,0,0,.12);
+}
+header h1{margin:0;font-size:23px}
+header p{margin:4px 0 0;font-size:13px;opacity:.78}
+.headerBtns{display:flex;gap:8px;align-items:center}
+.headerBtns button{
+  border:0;
+  border-radius:9px;
+  padding:10px 13px;
+  font-weight:700;
+  cursor:pointer;
+}
+#progressWrap{
+  display:none;
+  width:150px;
+  height:7px;
+  background:rgba(255,255,255,.18);
+  border-radius:99px;
+  overflow:hidden;
+}
+#progress{
+  height:100%;
+  width:0%;
+  background:#fff;
+}
+
+.layout{display:flex;min-height:calc(100vh - 78px)}
+aside{
+  width:325px;
+  flex:0 0 325px;
+  background:#fff;
+  border-right:1px solid var(--line);
+  padding:20px;
+  overflow-y:auto;
+  position:sticky;
+  top:78px;
+  height:calc(100vh - 78px);
+}
+.search{
+  width:100%;
+  border:1px solid #ccd5e1;
+  border-radius:10px;
+  padding:12px 13px;
+  outline:none;
+  font-size:14px;
+  margin-bottom:18px;
+}
+.unitTitle{
+  margin:18px 0 8px;
+  color:var(--muted);
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.05em;
+}
+.chapterBtn{
+  width:100%;
+  text-align:left;
+  border:0;
+  background:transparent;
+  padding:10px 11px;
+  margin:3px 0;
+  border-radius:9px;
+  cursor:pointer;
+  color:#26344b;
+  font-size:14px;
+}
+.chapterBtn:hover,.chapterBtn.active{
+  background:#e5eef9;
+  font-weight:700;
+}
+.quick{
+  margin-top:18px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#f8fafc;
+  font-size:13px;
+  line-height:1.55;
+}
+.quick b{display:block;margin-bottom:5px}
+
+main{
+  flex:1;
+  padding:30px;
+  min-width:0;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  margin-bottom:18px;
+}
+#unitLabel{font-size:13px;color:var(--muted)}
+#chapterTitle{margin:5px 0 0;font-size:30px}
+.topActions{display:flex;gap:8px;flex-wrap:wrap}
+.topActions button{
+  border:0;
+  border-radius:9px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-weight:700;
+}
+.primary{background:var(--nav);color:#fff}
+.secondary{background:#fff;color:var(--nav);border:1px solid var(--line)!important}
+
+.content{
+  background:var(--card);
+  border-radius:16px;
+  padding:36px;
+  box-shadow:0 7px 28px rgba(31,48,75,.08);
+  line-height:1.72;
+  font-size:16px;
+}
+.content h2{
+  font-size:25px;
+  margin:0 0 18px;
+  color:var(--nav);
+}
+.content h3{
+  font-size:20px;
+  margin:28px 0 10px;
+  color:#223a5e;
+}
+.content h4{
+  font-size:17px;
+  margin:22px 0 8px;
+}
+.content p{margin:0 0 13px}
+.content ul,.content ol{margin:8px 0 16px 25px}
+.content li{margin:5px 0}
+.content table{
+  width:100%;
+  border-collapse:collapse;
+  margin:15px 0 22px;
+  background:#fff;
+}
+.content th,.content td{
+  border:1px solid #dbe2ea;
+  padding:10px 11px;
+  vertical-align:top;
+  text-align:left;
+}
+.content th{background:#eef4fa}
+.note{
+  padding:14px 16px;
+  border-left:4px solid var(--accent);
+  background:#f3f7fc;
+  border-radius:8px;
+  margin:14px 0;
+}
+.ppt{
+  padding:16px;
+  margin:15px 0;
+  border:1px solid #d9e2ed;
+  border-radius:10px;
+  background:#fafcff;
+}
+.copyMsg{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#172b4d;
+  color:white;
+  padding:12px 16px;
+  border-radius:10px;
+  display:none;
+  z-index:100;
+}
+.hidden{display:none!important}
+
+@media(max-width:900px){
+  aside{
+    width:100%;
+    flex:0 0 auto;
+    position:static;
+    height:auto;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+  .layout{flex-direction:column}
+  main{padding:18px}
+  .topbar{flex-direction:column}
+  #progressWrap{display:none}
+}
+@media(max-width:600px){
+  header{padding:12px 15px}
+  header h1{font-size:19px}
+  .headerBtns .homeBtn{display:none}
+  .content{padding:22px}
+  .content table{font-size:14px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="lockScreen">
+  <div class="lockBox">
+    <div class="lockIcon">🔒</div>
+    <h1>KIPS AI 417</h1>
+    <p>Class 9 • Part A • Private Study Hub</p>
+    <input id="password" type="password" placeholder="Enter password"
+           onkeydown="if(event.key==='Enter') unlock()">
+    <button onclick="unlock()">UNLOCK STUDY HUB</button>
+    <div id="error"></div>
+  </div>
+</div>
+
+<div id="app">
+
+<header>
+  <div>
+    <h1>KIPS AI 417 — Class 9</h1>
+    <p>Part A • Employability Skills • Chapters 1–10</p>
+  </div>
+  <div class="headerBtns">
+    <div id="progressWrap"><div id="progress"></div></div>
+    <button class="homeBtn" onclick="showWelcome()">Home</button>
+    <button onclick="lockApp()">🔒 Lock</button>
+  </div>
+</header>
+
+<div class="layout">
+
+<aside>
+  <input class="search" id="search" placeholder="Search chapters or topics..." oninput="filterChapters()">
+
+  <div class="unitTitle">Unit 1 — Communication Skills-I</div>
+  <button class="chapterBtn" data-index="0" onclick="openChapter(0)">1. Methods of Communication</button>
+  <button class="chapterBtn" data-index="1" onclick="openChapter(1)">2. Communication Cycle</button>
+  <button class="chapterBtn" data-index="2" onclick="openChapter(2)">3. Perspectives in Communication</button>
+  <button class="chapterBtn" data-index="3" onclick="openChapter(3)">4. Basic Writing Skills</button>
+
+  <div class="unitTitle">Unit 2 — Self-Management Skills-I</div>
+  <button class="chapterBtn" data-index="4" onclick="openChapter(4)">5. Importance of Self-Management</button>
+  <button class="chapterBtn" data-index="5" onclick="openChapter(5)">6. Building Self-Confidence</button>
+
+  <div class="unitTitle">Unit 3 — Information and Communication Technology Skills-I</div>
+  <button class="chapterBtn" data-index="6" onclick="openChapter(6)">7. Introduction to ICT</button>
+  <button class="chapterBtn" data-index="7" onclick="openChapter(7)">8. Components of a Computer System</button>
+  <button class="chapterBtn" data-index="8" onclick="openChapter(8)">9. Peripheral Devices</button>
+  <button class="chapterBtn" data-index="9" onclick="openChapter(9)">10. Basic Computer Skills</button>
+
+  <div class="quick">
+    <b>Fast PPT workflow</b>
+    Open a chapter → scroll to the section you need → use <b>Copy Chapter</b> or select text manually → paste into your PPT.
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div>
+      <div id="unitLabel">Part A — Employability Skills</div>
+      <h2 id="chapterTitle">KIPS AI 417 Study Hub</h2>
+    </div>
+    <div class="topActions">
+      <button class="primary" id="copyBtn" onclick="copyChapter()" style="display:none">📋 Copy Chapter</button>
+      <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+    </div>
+  </div>
+
+  <div class="content" id="content"></div>
+</main>
+
+</div>
+</div>
+
+<div class="copyMsg" id="copyMsg">Copied!</div>
+
+<script>
+/* =========================================================
+   PASSWORD
+   Change this one line if you want a different password.
+========================================================= */
+const PASSWORD = "KIPS417";
+
+/* =========================================================
+   CHAPTER CONTENT
+   This is a KIPS-aligned study version written in original
+   wording, covering the major concepts reflected in the
+   Class 9 Part A chapters.
+========================================================= */
+
+const chapters = [
+
+{
+unit:"Unit 1 — Communication Skills-I",
+title:"1. Methods of Communication",
+content:`
+<h2>1. Methods of Communication</h2>
+
+<p><b>Communication</b> is the exchange of information, ideas, thoughts, feelings or messages between people. Communication can happen through words, gestures, facial expressions, body language, pictures, signs and other visual forms.</p>
+
+<h3>Methods of Communication</h3>
+<p>The major methods are <b>verbal communication, non-verbal communication and visual communication</b>.</p>
+
+<h3>Verbal Communication</h3>
+<p>Verbal communication uses words to communicate a message. It has two primary forms: <b>oral communication</b> and <b>written communication</b>.</p>
+
+<h4>Oral Communication</h4>
+<p>Oral communication takes place through spoken words. It may be face-to-face or through devices such as telephones and online meeting platforms.</p>
+<ul>
+<li>Face-to-face conversation</li>
+<li>Telephone conversation</li>
+<li>Discussion</li>
+<li>Meeting</li>
+<li>Interview</li>
+<li>Speech</li>
+<li>Presentation</li>
+</ul>
+
+<h4>Advantages of Oral Communication</h4>
+<ul>
+<li>It is quick and convenient.</li>
+<li>Feedback can usually be received immediately.</li>
+<li>It helps in building interpersonal relationships.</li>
+<li>It encourages participation in teamwork and decision-making.</li>
+<li>Questions can be asked and doubts can be clarified immediately.</li>
+<li>It is useful when a message must be discussed rather than simply recorded.</li>
+</ul>
+
+<h4>Limitations of Oral Communication</h4>
+<ul>
+<li>Emotions and tone may cause the message to be misunderstood.</li>
+<li>There may be no permanent record of what was said.</li>
+<li>Details can be forgotten after the conversation.</li>
+<li>Accent, pronunciation or speaking speed can affect understanding.</li>
+<li>Long and detailed information can be difficult to communicate orally.</li>
+</ul>
+
+<h4>Written Communication</h4>
+<p>Written communication uses written words to convey a message. Examples include letters, e-mails, notices, reports, applications and messages.</p>
+
+<h4>Advantages of Written Communication</h4>
+<ul>
+<li>It creates a permanent record.</li>
+<li>The sender gets time to organise and carefully draft the message.</li>
+<li>Long and detailed information can be communicated.</li>
+<li>It is useful for formal communication.</li>
+<li>Written information can be referred to later.</li>
+<li>It can be shared with several people.</li>
+</ul>
+
+<h4>Limitations of Written Communication</h4>
+<ul>
+<li>It generally takes more time than speaking.</li>
+<li>Feedback may be delayed.</li>
+<li>The receiver must be able to read and understand the language.</li>
+<li>Tone and facial expressions are not directly available.</li>
+<li>It may not be suitable when an immediate response is required.</li>
+</ul>
+
+<h3>Non-verbal Communication</h3>
+<p>Non-verbal communication means communicating without using oral or written words. It often works together with verbal communication and gives additional information about emotions, attitudes and reactions.</p>
+
+<h4>Elements of Non-verbal Communication</h4>
+<ul>
+<li><b>Facial Expression:</b> The face can show happiness, sadness, anger, surprise and many other emotions.</li>
+<li><b>Gestures:</b> Movements of the hands, head or body can communicate meaning, such as waving or giving a thumbs-up.</li>
+<li><b>Voice:</b> Pitch, tone, volume and manner of speaking can add meaning to words.</li>
+<li><b>Body Language:</b> The position and movement of the body can communicate feelings and attitudes.</li>
+<li><b>Eye Gaze:</b> Eye contact can show attention, interest or involvement.</li>
+<li><b>Physical Contact:</b> A handshake or other appropriate contact can communicate a social message depending on the situation.</li>
+<li><b>Dress and Appearance:</b> Appearance can influence how a person is perceived in a particular setting.</li>
+</ul>
+
+<h4>Role of Body Language</h4>
+<p>Body language may support spoken words, strengthen a message or sometimes contradict what is being said. Therefore, a listener should consider both the words and non-verbal signals.</p>
+
+<h3>Visual Communication</h3>
+<p>Visual communication uses visual elements to convey information or a message.</p>
+<ul>
+<li>Pictures</li>
+<li>Graphs</li>
+<li>Charts</li>
+<li>Diagrams</li>
+<li>Maps</li>
+<li>Models</li>
+<li>Signs and symbols</li>
+<li>Posters</li>
+<li>Infographics</li>
+</ul>
+
+<h4>Uses of Visual Communication</h4>
+<ul>
+<li>It attracts attention.</li>
+<li>It can make complex information easier to understand.</li>
+<li>Graphs and charts can present numerical data clearly.</li>
+<li>Visual aids can support oral communication.</li>
+<li>It can help learners remember information.</li>
+</ul>
+
+<h3>Choosing a Suitable Method</h3>
+<table>
+<tr><th>Situation</th><th>Suitable method</th><th>Reason</th></tr>
+<tr><td>Discuss an idea with a team</td><td>Oral</td><td>Allows immediate discussion and feedback.</td></tr>
+<tr><td>Send detailed formal instructions</td><td>Written</td><td>Can be carefully prepared and referred to later.</td></tr>
+<tr><td>Show changes in data</td><td>Visual</td><td>A graph or chart presents the information quickly.</td></tr>
+<tr><td>Communicate silently</td><td>Non-verbal</td><td>Gestures and facial expressions can convey meaning without words.</td></tr>
+</table>
+
+<div class="note"><b>PPT keywords:</b> Verbal → Oral + Written | Non-verbal → Facial Expression, Gestures, Voice, Body Language, Eye Gaze, Physical Contact, Dress & Appearance | Visual → Pictures, Charts, Graphs, Diagrams, Signs and Symbols.</div>
+`
+},
+
+{
+unit:"Unit 1 — Communication Skills-I",
+title:"2. Communication Cycle",
+content:`
+<h2>2. Communication Cycle</h2>
+
+<h3>Meaning of Communication</h3>
+<p>Communication is the process of transferring or sharing information between two or more people. It is a two-way process in which the sender and receiver work towards mutual understanding.</p>
+
+<h3>Communication Cycle</h3>
+<p>The communication cycle describes how a message moves from a sender to a receiver and how a response comes back to the sender.</p>
+
+<ol>
+<li><b>Sender:</b> The person who starts the communication and has an idea, thought or information to share.</li>
+<li><b>Encoding:</b> The sender converts the idea into words, symbols, gestures or another understandable form.</li>
+<li><b>Message:</b> The information or idea that is being communicated.</li>
+<li><b>Communication Channel:</b> The medium used to send the message, such as speech, telephone, e-mail, text message or a notice.</li>
+<li><b>Receiver:</b> The person for whom the message is intended.</li>
+<li><b>Decoding:</b> The receiver interprets and understands the message.</li>
+<li><b>Feedback:</b> The response given by the receiver. It completes the cycle and helps the sender know whether the message has been understood.</li>
+</ol>
+
+<h3>Example of the Communication Cycle</h3>
+<p>A teacher asks a question. The teacher is the sender, the question is the message, speech is the channel, the student is the receiver, the student interprets the question and gives an answer, and that answer is feedback.</p>
+
+<h3>Effective Communication</h3>
+<p>Effective communication occurs when the intended message is successfully delivered, received and understood.</p>
+
+<h4>Features of Effective Communication</h4>
+<ul>
+<li>A mutually accepted code, such as a common language or set of symbols.</li>
+<li>A clear and understandable message.</li>
+<li>Careful listening by the receiver.</li>
+<li>Appropriate response or feedback.</li>
+<li>A suitable communication channel.</li>
+<li>Awareness of the situation and environment.</li>
+</ul>
+
+<h3>Barriers to Effective Communication</h3>
+<p>A communication barrier is a factor that prevents the receiver from receiving or understanding the message accurately.</p>
+
+<h4>1. Environmental Barriers</h4>
+<p>These are caused by the physical surroundings or conditions in which communication occurs. Examples include poor lighting, unsuitable room conditions and problems with communication equipment or instruments.</p>
+
+<h4>2. Situational Barriers</h4>
+<p>These arise from the circumstances of communication. <b>Distance, noise and distractions</b> may interrupt or reduce understanding. Loud music, machinery and other disturbances are examples.</p>
+
+<h4>3. Individual Barriers</h4>
+<p>These are related to the sender or receiver. Examples include <b>attitude, linguistic ability, inattention and emotional state</b>.</p>
+
+<h3>Listening in Communication</h3>
+<p>Listening is more than simply hearing sounds. A good listener pays attention, understands the message, avoids unnecessary interruption and responds appropriately.</p>
+
+<h4>How to Improve Listening</h4>
+<ul>
+<li>Pay attention to the speaker.</li>
+<li>Avoid unnecessary distractions.</li>
+<li>Allow the speaker to finish.</li>
+<li>Ask questions when something is unclear.</li>
+<li>Give suitable feedback.</li>
+</ul>
+
+<div class="note"><b>Remember:</b> Feedback is essential because it tells the sender whether the communication has been understood. The cycle is not complete until a response is received.</div>
+`
+},
+
+{
+unit:"Unit 1 — Communication Skills-I",
+title:"3. Perspectives in Communication",
+content:`
+<h2>3. Perspectives in Communication</h2>
+
+<h3>Meaning of Perspective</h3>
+<p>Perspective is an individual's point of view through which a person interprets and understands communication and events around them. Different people can interpret the same situation differently because their experiences, beliefs and feelings are different.</p>
+
+<h3>Factors Affecting Perspective and Communication</h3>
+<ul>
+<li>Visual perspective</li>
+<li>Language</li>
+<li>Past experiences</li>
+<li>Attitude</li>
+<li>Prejudice</li>
+<li>Environment</li>
+<li>Feelings</li>
+<li>Beliefs</li>
+</ul>
+
+<h3>Visual Perspective</h3>
+<p>Visual perspective is our tendency to focus on the part of a scene or image that we are most inclined to notice. The brain processes what is seen through the eyes and interprets it. The same visual image may be interpreted differently by different people.</p>
+
+<h3>Language</h3>
+<p>Language influences how a message is expressed and understood. Differences in vocabulary, grammar, accent, pronunciation or familiarity with a language can create misunderstanding.</p>
+
+<h3>Past Experiences</h3>
+<p>Previous experiences influence expectations and judgement. A person may interpret a new event based on what happened in the past. A previous negative experience can make a person cautious, while a positive experience can create confidence.</p>
+
+<h3>Attitude</h3>
+<p>Attitude is the way a person thinks or feels about a person, object, situation or idea. A positive attitude can encourage open communication, while a negative attitude can create resistance.</p>
+
+<h3>Prejudice</h3>
+<p>Prejudice means forming an opinion about a person or group without sufficient knowledge or a fair evaluation. It can influence how communication is interpreted and can lead to unfair judgement.</p>
+
+<h3>Environment</h3>
+<p>The environment can influence mood and motivation and can either facilitate or discourage interaction. Familiar environments may provide a sense of safety and security, while an uncomfortable environment can become a barrier to effective communication.</p>
+
+<h3>Feelings</h3>
+<p>Emotions such as happiness, anger, fear, sadness or nervousness can affect both the way a person sends a message and the way a message is received.</p>
+
+<h3>Beliefs</h3>
+<p>Beliefs are ideas or convictions that a person accepts as true. They influence how people interpret information and how they react to situations.</p>
+
+<h3>Why Different People See the Same Situation Differently</h3>
+<p>People do not always have the same knowledge, experiences, attitudes, feelings or beliefs. As a result, the same communication may produce different interpretations.</p>
+
+<div class="ppt">
+<b>PPT example:</b> A new student may appear quiet and uninterested to one person. Another student may interpret the same behaviour as nervousness. Their perspectives are different because their observations and previous experiences are different.
+</div>
+
+<h3>Perspective and Effective Communication</h3>
+<ul>
+<li>Do not immediately assume that your interpretation is the only correct one.</li>
+<li>Listen carefully to other people's explanations.</li>
+<li>Ask questions when the meaning is unclear.</li>
+<li>Be aware of your own assumptions and prejudice.</li>
+<li>Consider the other person's feelings and background.</li>
+</ul>
+`
+},
+
+{
+unit:"Unit 1 — Communication Skills-I",
+title:"4. Basic Writing Skills",
+content:`
+<h2>4. Basic Writing Skills</h2>
+
+<h3>Written Communication</h3>
+<p>Written communication is communication in which the message is presented in written form. Compared with oral communication, written communication is generally more formal and less flexible, and it can provide a permanent record.</p>
+
+<h3>7 Cs of Communication</h3>
+<p>The <b>7 Cs of Communication</b> provide a checklist for making communication effective.</p>
+<ul>
+<li><b>Clear:</b> The message should be easy to understand.</li>
+<li><b>Concise:</b> Avoid unnecessary words and repetition.</li>
+<li><b>Concrete:</b> Use specific and definite information.</li>
+<li><b>Correct:</b> Information and language should be accurate.</li>
+<li><b>Coherent:</b> Ideas should be logically connected.</li>
+<li><b>Complete:</b> The message should contain the necessary information.</li>
+<li><b>Courteous:</b> The language should be polite and respectful.</li>
+</ul>
+
+<h3>Sentence</h3>
+<p>A sentence is a group of words that makes complete sense.</p>
+
+<h3>Types of Sentences</h3>
+
+<h4>1. Assertive Sentence</h4>
+<p>It states a fact, idea or opinion.</p>
+<p><i>Example: I study in Class IX.</i></p>
+
+<h4>2. Imperative Sentence</h4>
+<p>It expresses a command, request, advice or instruction.</p>
+<p><i>Example: Please open the window.</i></p>
+
+<h4>3. Interrogative Sentence</h4>
+<p>It asks a question.</p>
+<p><i>Example: How are you doing?</i></p>
+
+<h4>4. Exclamatory Sentence</h4>
+<p>It expresses a strong emotion or feeling.</p>
+<p><i>Example: It is such a beautiful painting!</i></p>
+
+<h3>Subject and Predicate</h3>
+<p>The <b>subject</b> tells us who or what the sentence is about. The <b>predicate</b> contains the verb and states what is said about the subject.</p>
+<table>
+<tr><th>Sentence</th><th>Subject</th><th>Predicate</th></tr>
+<tr><td>The students completed the project.</td><td>The students</td><td>completed the project.</td></tr>
+<tr><td>An unusual event occurred at our beach last summer.</td><td>An unusual event</td><td>occurred at our beach last summer.</td></tr>
+<tr><td>They heard a strange sound.</td><td>They</td><td>heard a strange sound.</td></tr>
+</table>
+
+<h3>Phrases</h3>
+<p>A phrase is a group of words that works together as part of a sentence but does not normally express a complete thought by itself.</p>
+<ul>
+<li><b>Noun phrase</b></li>
+<li><b>Adjective phrase</b></li>
+<li><b>Adverbial phrase</b></li>
+<li><b>Verb phrase</b></li>
+<li><b>Prepositional phrase</b></li>
+</ul>
+
+<h3>Prepositions</h3>
+<p>A preposition describes the relationship between words in a sentence. It can show place, time, direction or another relationship.</p>
+<p><i>Example: The book is <b>on</b> the table.</i> Here, “on” describes the relationship between the book and the table.</p>
+
+<h3>Interjections</h3>
+<p>An interjection is a word or phrase that expresses a strong emotion. It is often followed by an exclamation mark.</p>
+<p><i>Examples: Oh! Wow! Ouch! Hurray!</i></p>
+<p>In written communication, an interjection can help show the writer's emotion when facial expressions and other non-verbal cues are absent.</p>
+
+<h3>Adjectives</h3>
+<p>An adjective describes or modifies a noun or pronoun. It may tell us about quality, quantity, number, size, colour or other characteristics.</p>
+
+<h3>Articles</h3>
+<p>The common articles are <b>a, an</b> and <b>the</b>.</p>
+<ul>
+<li>Use <b>a</b> before a word beginning with a consonant sound.</li>
+<li>Use <b>an</b> before a word beginning with a vowel sound.</li>
+<li>Use <b>the</b> when referring to a specific person, place or thing.</li>
+</ul>
+
+<h3>Basic Writing Checklist</h3>
+<ul>
+<li>Use complete sentences.</li>
+<li>Choose the correct sentence type for the purpose.</li>
+<li>Check subject and predicate.</li>
+<li>Use appropriate vocabulary and grammar.</li>
+<li>Use correct punctuation.</li>
+<li>Keep the message clear, concise and complete.</li>
+<li>Proofread before sending or submitting.</li>
+</ul>
+
+<div class="note"><b>Exam focus:</b> 7 Cs, four types of sentences, subject and predicate, phrases, prepositions, interjections, adjectives and articles.</div>
+`
+},
+
+{
+unit:"Unit 2 — Self-Management Skills-I",
+title:"5. Importance of Self-Management",
+content:`
+<h2>5. Importance of Self-Management</h2>
+
+<h3>Meaning of Management</h3>
+<p>Management is the art of planning, organising, directing and controlling resources and tasks efficiently and effectively to achieve a goal.</p>
+
+<h3>Meaning of Self-Management</h3>
+<p><b>Self-management</b> is the ability to manage oneself in order to achieve predetermined tasks or goals. It involves regulating actions, organising time and taking responsibility for decisions.</p>
+
+<h3>Self-Management and Time Management</h3>
+<p>Self-management covers how a person regulates behaviour, actions, responsibilities and goals. <b>Time management</b> specifically focuses on using time effectively and assigning suitable time slots to different tasks and activities.</p>
+
+<h3>Importance of Self-Management</h3>
+<ul>
+<li>Makes a person more organised.</li>
+<li>Instils discipline.</li>
+<li>Helps in attaining goals.</li>
+<li>Enhances self-confidence.</li>
+<li>Builds responsibility and accountability.</li>
+<li>Can earn the respect and trust of others.</li>
+</ul>
+
+<h3>Goal Setting</h3>
+<p>A goal gives direction and helps a person know what needs to be achieved. A good target should be realistic and time-bound so that progress can be monitored.</p>
+
+<h3>SMART Goals</h3>
+<table>
+<tr><th>Letter</th><th>Meaning</th><th>What it means</th></tr>
+<tr><td>S</td><td>Specific</td><td>The target should be clear and definite.</td></tr>
+<tr><td>M</td><td>Measurable</td><td>The target should be expressed in a way that allows progress to be checked.</td></tr>
+<tr><td>A</td><td>Achievable</td><td>The target should be possible with the available ability and resources.</td></tr>
+<tr><td>R</td><td>Realistic</td><td>The target should be practical and attainable.</td></tr>
+<tr><td>T</td><td>Time-bound</td><td>A time limit or deadline should be fixed.</td></tr>
+</table>
+
+<h4>Measurable Target</h4>
+<p>A measurable target is defined in quantifiable terms so that success or failure can be assessed objectively. For example, “solve 20 Mathematics problems in 2 hours” is more measurable than simply saying “improve my Mathematics”.</p>
+
+<h3>Organisational Skills</h3>
+<p>Organisation is the ability to use time, energy and resources effectively to achieve goals.</p>
+
+<h4>Useful Organisational Strategies</h4>
+<ul>
+<li><b>Set SMART targets:</b> Set realistic goals and monitor progress.</li>
+<li><b>Prioritise and schedule:</b> Complete important tasks first and prepare a schedule.</li>
+<li><b>Learn to say “No”:</b> Avoid insignificant commitments that interfere with important goals.</li>
+<li><b>Spend the right time on the right activity:</b> Set a practical time limit for tasks.</li>
+</ul>
+
+<h3>Time Management</h3>
+<p>Time management means planning and controlling the time spent on different activities so that important work is completed efficiently.</p>
+
+<h4>Strategies for Managing Time</h4>
+<ul>
+<li><b>Planning:</b> Decide what must be done, how much work can be taken up and how much time it requires.</li>
+<li><b>Estimate time required:</b> Be realistic about how long each task will take.</li>
+<li><b>Prioritise and schedule:</b> Arrange tasks by importance and urgency and put them into a workable schedule.</li>
+<li><b>Use a to-do list:</b> Keep a visible list of tasks and update it.</li>
+</ul>
+
+<h3>Procrastination</h3>
+<p><b>Procrastination</b> is the habit of delaying or avoiding a task that needs to be completed.</p>
+
+<h4>Ways to Avoid Procrastination</h4>
+<ul>
+<li>Acknowledge that you are procrastinating.</li>
+<li>Prepare and regularly check a to-do list.</li>
+<li>Break a large task into smaller tasks.</li>
+<li>Schedule difficult or laborious tasks before more enjoyable tasks.</li>
+<li>Reward yourself after completing important tasks.</li>
+</ul>
+
+<h3>Problem-Solving Attitude</h3>
+<p>A <b>solution-centred</b> attitude helps a person focus on possible solutions rather than remaining stuck on the problem.</p>
+
+<h3>Initiative</h3>
+<p><b>Initiative</b> means doing the right thing without waiting to be told what to do.</p>
+
+<div class="note"><b>Key words:</b> SMART, organisation, responsibility, accountability, time management, procrastination, solution-centred attitude, initiative.</div>
+`
+},
+
+{
+unit:"Unit 2 — Self-Management Skills-I",
+title:"6. Building Self-Confidence",
+content:`
+<h2>6. Building Self-Confidence</h2>
+
+<h3>Meaning of Self-Confidence</h3>
+<p><b>Self-confidence</b> is the belief in one's own abilities, judgement and capacity to handle situations and challenges.</p>
+
+<h3>Why Self-Confidence Matters</h3>
+<ul>
+<li>It helps a person face challenges.</li>
+<li>It encourages participation and initiative.</li>
+<li>It supports decision-making.</li>
+<li>It helps a person deal with failures and obstacles.</li>
+<li>It encourages learning and improvement.</li>
+<li>It contributes to a positive outlook.</li>
+</ul>
+
+<h3>Experience and Self-Confidence</h3>
+<p>Experience can increase confidence because it builds competence. Each successful experience can strengthen confidence. At the same time, a person learns to overcome obstacles and handle failures.</p>
+
+<h3>Low Self-Confidence</h3>
+<p>A lack of confidence can create a cycle in which fear and unpreparedness prevent success, and failure then reinforces feelings of inadequacy and causes confidence to fall further.</p>
+
+<h4>Common Signs of Low Self-Confidence</h4>
+<ul>
+<li>Hesitation to accept challenges.</li>
+<li>Doubting one's own abilities.</li>
+<li>Focusing heavily on weaknesses.</li>
+<li>Depending strongly on approval or validation from others.</li>
+<li>Avoiding risks and new opportunities.</li>
+<li>Feeling fearful or anxious about performance.</li>
+<li>Being unprepared or reluctant to interact with others.</li>
+</ul>
+
+<h3>High Self-Confidence</h3>
+<ul>
+<li>Belief in one's own capability.</li>
+<li>Willingness to take on challenges.</li>
+<li>Readiness to face obstacles.</li>
+<li>Positive attitude toward strengths and abilities.</li>
+<li>Ability to recognise strengths and accept weaknesses.</li>
+<li>Ability to accept mistakes and learn from them.</li>
+<li>Focus on opportunities to grow.</li>
+</ul>
+
+<h3>Factors that Can Affect Self-Confidence</h3>
+
+<h4>Parents and Family</h4>
+<p>The attitude of parents can have a major influence, especially during the early years. Lack of love and attention, harsh punishment, excessive criticism and derogatory remarks may damage confidence. Overprotective parenting can also reduce opportunities to face challenges and develop resilience. A balanced approach encourages confidence.</p>
+
+<h4>Society</h4>
+<p>Society and the people around us may influence how we see ourselves. Acceptance, encouragement and constructive feedback can support confidence, while constant negative judgement can weaken it.</p>
+
+<h4>Culture</h4>
+<p>Cultural expectations can influence behaviour, attitudes and the way people view themselves and others.</p>
+
+<h4>Threats and Fear</h4>
+<p>Constant threats, fear of failure or fear of criticism can discourage a person from taking initiative and accepting challenges.</p>
+
+<h3>Ways to Build Self-Confidence</h3>
+<ul>
+<li>Know your strengths and areas for improvement.</li>
+<li>Set achievable goals and work towards them.</li>
+<li>Prepare well before important tasks.</li>
+<li>Learn from mistakes instead of treating them as proof of inability.</li>
+<li>Take small steps outside your comfort zone.</li>
+<li>Use positive and realistic self-talk.</li>
+<li>Develop skills through practice and experience.</li>
+<li>Accept constructive feedback.</li>
+<li>Avoid unhealthy comparison with others.</li>
+<li>Celebrate progress and completed goals.</li>
+</ul>
+
+<div class="note"><b>PPT line:</b> Confidence grows through preparation, practice, experience, learning from mistakes and facing challenges step by step.</div>
+`
+},
+
+{
+unit:"Unit 3 — Information and Communication Technology Skills-I",
+title:"7. Introduction to ICT",
+content:`
+<h2>7. Introduction to ICT</h2>
+
+<h3>Meaning of ICT</h3>
+<p><b>ICT</b> stands for <b>Information and Communication Technology</b>. It includes technologies and tools used to create, collect, store, process, communicate, access and share information.</p>
+
+<h3>Examples of ICT Tools</h3>
+<ul>
+<li>Television</li>
+<li>Mobile phones and smartphones</li>
+<li>Tablets</li>
+<li>Computers</li>
+<li>E-mail</li>
+<li>Internet services</li>
+<li>Digital cameras</li>
+<li>Printers</li>
+<li>Projectors</li>
+</ul>
+
+<h3>ICT in Daily Life</h3>
+<p>ICT has changed the way people communicate, learn, work, shop and access services.</p>
+<ul>
+<li>Online shopping and e-commerce</li>
+<li>Online banking and digital payments</li>
+<li>E-mail and instant messaging</li>
+<li>Online education</li>
+<li>Digital entertainment</li>
+<li>Social networking</li>
+<li>Access to news and information</li>
+<li>Online health information and services</li>
+</ul>
+
+<h3>ICT in Education</h3>
+<p>ICT provides tools for teaching, learning and collaboration. Examples include computers, laptops, projectors, tablets, digital cameras, printers, scanners, microphones, interactive whiteboards, DVDs, web-based resources and educational applications.</p>
+
+<p>Digital learning materials such as <b>e-books</b> allow information to be accessed electronically. ICT can also support communication between teachers and students through digital platforms.</p>
+
+<h3>ICT in Healthcare and Pharmaceuticals</h3>
+<ul>
+<li>Supports research and manufacturing in the pharmaceutical sector.</li>
+<li>Helps with hospital management and administration.</li>
+<li>Helps doctors and nurses diagnose, treat and monitor patients.</li>
+<li>Allows people to search for information about diseases, symptoms, treatments and precautions.</li>
+</ul>
+
+<h3>ICT in the Workplace</h3>
+<p>ICT can improve efficiency and support information, research, design and communication.</p>
+<ul>
+<li>Searching information</li>
+<li>Prospecting</li>
+<li>Research and development</li>
+<li>Designing</li>
+<li>Engineering and manufacturing</li>
+<li>Assembly</li>
+<li>Fault diagnosis</li>
+<li>Safety tests and simulations</li>
+<li>Power generation and distribution</li>
+<li>Building and maintaining networks</li>
+</ul>
+
+<h3>ICT and Modern Communication</h3>
+<p>Traditional communication methods such as printed materials continue to exist, but ICT provides fast digital ways of sharing information. Some digital tools support <b>one-to-one</b>, <b>one-to-many</b> and group communication.</p>
+
+<h3>Benefits of ICT</h3>
+<ul>
+<li>Fast access to information.</li>
+<li>Easy communication across distance.</li>
+<li>Large amounts of data can be stored and processed.</li>
+<li>Supports learning and research.</li>
+<li>Improves workplace efficiency.</li>
+<li>Enables online services and transactions.</li>
+</ul>
+`
+},
+
+{
+unit:"Unit 3 — Information and Communication Technology Skills-I",
+title:"8. Components of a Computer System",
+content:`
+<h2>8. Components of a Computer System</h2>
+
+<h3>Computer System</h3>
+<p>A computer system consists of hardware components and software that work together to accept data, process it, store it and produce information.</p>
+
+<h3>Central Processing Unit (CPU)</h3>
+<p>The <b>CPU</b> controls internal and external devices and performs arithmetic and logical operations. It is commonly described as the main processing unit of a computer.</p>
+
+<h4>Main Components of CPU</h4>
+<table>
+<tr><th>Component</th><th>Function</th></tr>
+<tr><td><b>Arithmetic and Logic Unit (ALU)</b></td><td>Performs arithmetic operations such as addition, subtraction, multiplication and division, and logical comparisons.</td></tr>
+<tr><td><b>Control Unit (CU)</b></td><td>Controls the operation of other components and manages the transfer of data and instructions.</td></tr>
+<tr><td><b>Memory Unit (MU)</b></td><td>Stores data and instructions needed for processing.</td></tr>
+</table>
+
+<h3>Registers</h3>
+<p>A <b>register</b> is a very small, high-speed data holding place in the processor. It can temporarily hold an instruction, data or storage address during processing.</p>
+
+<p>Common examples include:</p>
+<ul>
+<li><b>Accumulator (AC)</b></li>
+<li><b>Data Register (DR)</b></li>
+<li><b>Address Register (AR)</b></li>
+<li><b>Program Control / Program Counter (PC)</b></li>
+</ul>
+
+<h3>Primary Memory</h3>
+<p>Primary memory is the memory used by the computer for data and programs that are being actively used. It is fast and has limited capacity compared with secondary storage.</p>
+
+<h4>RAM</h4>
+<p><b>RAM (Random Access Memory)</b> is volatile memory used for temporary storage. Its contents are lost when power is switched off.</p>
+
+<h4>ROM</h4>
+<p><b>ROM (Read Only Memory)</b> is non-volatile memory. It stores instructions that are retained when power is turned off, such as instructions associated with starting the computer.</p>
+
+<table>
+<tr><th>RAM</th><th>ROM</th></tr>
+<tr><td>Random Access Memory</td><td>Read Only Memory</td></tr>
+<tr><td>Volatile</td><td>Non-volatile</td></tr>
+<tr><td>Temporary working storage</td><td>Stores retained instructions</td></tr>
+<tr><td>Data is lost when power is removed</td><td>Data is retained when power is removed</td></tr>
+</table>
+
+<h3>Cache Memory</h3>
+<p>Cache memory is a special high-speed memory located on or close to the processor. It stores frequently needed instructions and data so the CPU can access them more quickly, improving system performance.</p>
+
+<h3>Units of Memory</h3>
+<ul>
+<li><b>Bit:</b> The smallest unit of data; it can represent 0 or 1.</li>
+<li><b>Nibble:</b> 4 bits.</li>
+<li><b>Byte:</b> 8 bits.</li>
+<li><b>Kilobyte (KB):</b> 1 KB = 1024 bytes.</li>
+<li><b>Megabyte (MB):</b> 1 MB = 1024 KB.</li>
+<li><b>Gigabyte (GB):</b> 1 GB = 1024 MB.</li>
+<li><b>Terabyte (TB):</b> 1 TB = 1024 GB.</li>
+<li><b>Petabyte (PB):</b> 1 PB = 1024 TB.</li>
+</ul>
+
+<h3>CPU Speed</h3>
+<p>CPU speed may be expressed in units such as <b>Megahertz (MHz)</b> and <b>Gigahertz (GHz)</b>.</p>
+
+<div class="note"><b>Exam focus:</b> CPU + ALU/CU/MU, registers, RAM vs ROM, primary memory, cache memory and units of memory.</div>
+`
+},
+
+{
+unit:"Unit 3 — Information and Communication Technology Skills-I",
+title:"9. Peripheral Devices",
+content:`
+<h2>9. Peripheral Devices</h2>
+
+<h3>Meaning of Peripheral Devices</h3>
+<p>Peripheral devices are internal or external hardware devices connected to a computer to add functionality. Many peripheral devices can be connected, removed or replaced as required.</p>
+
+<h3>Examples</h3>
+<ul>
+<li>Keyboard</li>
+<li>Mouse</li>
+<li>Printer</li>
+<li>Scanner</li>
+<li>Monitor</li>
+<li>Modem</li>
+<li>Digital camera</li>
+<li>Optical disk drive</li>
+<li>Memory card reader</li>
+<li>Bluetooth devices</li>
+<li>USB devices</li>
+</ul>
+
+<h3>Input Devices</h3>
+<p>Input devices are used to enter data or instructions into a computer.</p>
+
+<h4>Scanner</h4>
+<p>A scanner is an input device that optically scans text, images and objects and converts the scanned information into a digital form.</p>
+
+<h4>Types of Scanner</h4>
+<ul>
+<li><b>Drum Scanner:</b> Uses a rotating drum and is used where very high-quality image scanning is required.</li>
+<li><b>Flatbed Scanner:</b> The document or object is placed on a glass surface. It is commonly used in homes and offices.</li>
+<li><b>Handheld Scanner:</b> A small scanner is moved over the item being scanned. It can be useful for portable scanning, including barcode applications.</li>
+</ul>
+
+<h3>Output Devices</h3>
+<p>Output devices present processed information to the user.</p>
+
+<h4>Monitor</h4>
+<p>A monitor is a common output device and is also called a <b>Visual Display Unit (VDU)</b>. It displays text, pictures, videos and other output on a screen.</p>
+
+<p>The display is made up of tiny dots called <b>pixels</b>. Pixels are arranged in rows and columns and together form the displayed image.</p>
+
+<h3>Printers</h3>
+<p>A printer produces output on paper or another physical medium.</p>
+
+<h4>Types of Printers</h4>
+<ul>
+<li><b>Impact printers:</b> Produce output by physically striking an inked ribbon against paper. Examples include dot-matrix and daisy-wheel printers.</li>
+<li><b>Non-impact printers:</b> Produce output without mechanically striking the paper. Examples include inkjet and laser printers.</li>
+</ul>
+
+<h4>Plotter</h4>
+<p>A plotter is an output device used for producing large, precise drawings and designs, such as engineering and architectural drawings.</p>
+
+<h3>Storage Devices</h3>
+
+<h4>Hard Disk Drive (HDD)</h4>
+<p>An <b>HDD</b> is a common storage device used for storing large amounts of data. It contains disks called <b>platters</b>. Read/write heads access data on the magnetic surface of the platters using an access arm.</p>
+
+<h3>Connectivity and Other Devices</h3>
+<ul>
+<li><b>Modem:</b> Supports communication between a computer and a network connection.</li>
+<li><b>Memory Card Reader:</b> Reads information stored on memory cards.</li>
+<li><b>Optical Disk Drive:</b> Reads or writes optical media such as CDs and DVDs, depending on the drive.</li>
+<li><b>Bluetooth:</b> Provides short-range wireless communication between compatible devices.</li>
+<li><b>USB:</b> A common interface for connecting and transferring data between computers and peripherals.</li>
+</ul>
+
+<div class="note"><b>Remember:</b> Scanner → Input | Monitor → Output | Printer/Plotter → Output | HDD → Storage | Peripheral devices extend the functionality of a computer.</div>
+`
+},
+
+{
+unit:"Unit 3 — Information and Communication Technology Skills-I",
+title:"10. Basic Computer Skills",
+content:`
+<h2>10. Basic Computer Skills</h2>
+
+<h3>Internet</h3>
+<p>The <b>Internet</b> is a global system of interconnected computer networks that enables users to share information and resources.</p>
+
+<h3>Common Uses of the Internet</h3>
+<ul>
+<li>Education</li>
+<li>E-mail</li>
+<li>Business</li>
+<li>E-commerce</li>
+<li>Media and entertainment</li>
+<li>Social networking</li>
+<li>Forums and online communities</li>
+<li>Health and fitness information</li>
+</ul>
+
+<h3>World Wide Web</h3>
+<p>The <b>World Wide Web (WWW)</b> is a service that provides access to interlinked documents and resources through the Internet.</p>
+
+<h3>Web Browser</h3>
+<p>A <b>web browser</b> is software used to view websites and webpages. It acts as an interface between the user and the World Wide Web.</p>
+
+<p>Examples include:</p>
+<ul>
+<li>Google Chrome</li>
+<li>Mozilla Firefox</li>
+<li>Microsoft Edge</li>
+<li>Opera</li>
+<li>Apple Safari</li>
+</ul>
+
+<h3>Website</h3>
+<p>A <b>website</b> is a collection of related webpages and other resources available under the same domain name. Websites are stored on web servers and can be accessed through the Internet.</p>
+
+<h4>Components of a Website</h4>
+<ul>
+<li>Domain Name</li>
+<li>Web Host</li>
+<li>Site Files</li>
+<li>Content Management System (CMS), where used</li>
+</ul>
+
+<h3>Webpage</h3>
+<p>A <b>webpage</b> is a digital page that may contain text, hyperlinks, images, audio, video, tables and other content. Webpages are commonly created using <b>HTML (HyperText Markup Language)</b>.</p>
+
+<h4>Basic Elements of a Webpage</h4>
+<ul>
+<li>Page title</li>
+<li>Header area</li>
+<li>Navigation menu</li>
+<li>Content area</li>
+<li>Footer</li>
+</ul>
+
+<h3>Types of Webpages</h3>
+
+<h4>Static Webpage</h4>
+<p>The content of a static webpage remains the same unless the page is manually updated. It is suitable for information that does not need frequent changes.</p>
+
+<h4>Dynamic Webpage</h4>
+<p>The content of a dynamic webpage may be generated or changed in response to a user's request, data or other conditions. Different users or visits may therefore receive different information.</p>
+
+<h3>Domain and Domain Name</h3>
+<p>A <b>domain name</b> is the human-readable name used to identify a website on the Internet. A domain extension appears at the end, such as .com, .org or .edu, depending on the website.</p>
+
+<h3>Protocol</h3>
+<p>A <b>protocol</b> is a standard set of rules used for communicating or transferring data over a network or the Internet. Protocols define how communication takes place and how data is sent and received.</p>
+
+<h3>HTTP</h3>
+<p><b>HTTP</b> stands for <b>HyperText Transfer Protocol</b>. It is an application-layer protocol used for communication between web browsers and web servers and for transferring hypermedia documents such as HTML pages.</p>
+
+<h3>Home Page</h3>
+<p>The <b>home page</b> is the main or first page of a website. It commonly provides links to other sections or pages of the website.</p>
+
+<h3>Uniform Resource Locator (URL)</h3>
+<p>A <b>URL</b> is the address used to identify and locate a resource on the web.</p>
+
+<h4>Two Main Parts of a URL</h4>
+<ul>
+<li><b>Protocol identifier:</b> Indicates the protocol to be used to access the resource.</li>
+<li><b>Resource name:</b> Specifies the address or location of the resource.</li>
+</ul>
+
+<div class="ppt"><b>Example pattern:</b> <code>https://example.com/page</code><br>The protocol is <b>https</b>; the remaining part identifies the web resource.</div>
+
+<h3>E-mail</h3>
+<p><b>E-mail</b> means electronic mail. It is used to send and receive messages electronically. It is quick, economical and allows communication with people across the world.</p>
+
+<h3>Parts of an E-mail Address</h3>
+<p>An e-mail address contains a <b>username</b> and a <b>domain name</b>, separated by the <b>@</b> symbol.</p>
+
+<p><code>username@domain.extension</code></p>
+
+<ul>
+<li><b>Username:</b> Identifies the person's or account's mailbox.</li>
+<li><b>Domain name:</b> Identifies the mail service or organisation.</li>
+<li><b>Domain extension:</b> Indicates the type or category associated with the domain.</li>
+</ul>
+
+<h3>E-mail Features</h3>
+<ul>
+<li><b>To:</b> Main recipient(s).</li>
+<li><b>CC:</b> Sends a visible copy to additional recipients.</li>
+<li><b>BCC:</b> Sends a copy while hiding the BCC recipients' addresses from other recipients.</li>
+<li><b>Subject:</b> Gives the purpose or topic of the message.</li>
+<li><b>Attachment:</b> Allows files to be sent with the message.</li>
+</ul>
+
+<h3>Why E-mail is Popular</h3>
+<ul>
+<li>Cost effective.</li>
+<li>Saves time.</li>
+<li>Can be accessed from different locations.</li>
+<li>Can be sent to multiple people.</li>
+<li>Easy to modify before sending.</li>
+<li>Provides flexibility.</li>
+<li>Can reduce paper usage.</li>
+<li>Provides a digital record of communication.</li>
+</ul>
+
+<h3>Basic Internet and Web Safety</h3>
+<ul>
+<li>Use strong, unique passwords.</li>
+<li>Do not share passwords or one-time authentication codes.</li>
+<li>Check links and websites before entering personal information.</li>
+<li>Be careful with unknown attachments and messages.</li>
+<li>Use trusted websites and secure connections.</li>
+<li>Log out from public or shared computers.</li>
+</ul>
+
+<div class="note"><b>Exam focus:</b> Internet, web browser, website, webpage, static vs dynamic pages, protocol, HTTP, home page, URL, domain, HTML and parts/features of an e-mail.</div>
+`
+}
+
+];
+
+/* ---------------- PASSWORD ---------------- */
+function unlock(){
+  const value=document.getElementById("password").value;
+  if(value===PASSWORD){
+    document.getElementById("lockScreen").style.display="none";
+    document.getElementById("app").style.display="block";
+    localStorage.setItem("kipsUnlocked","1");
+    showWelcome();
+  }else{
+    document.getElementById("error").textContent="Incorrect password.";
+  }
+}
+
+function lockApp(){
+  localStorage.removeItem("kipsUnlocked");
+  document.getElementById("app").style.display="none";
+  document.getElementById("lockScreen").style.display="flex";
+  document.getElementById("password").value="";
+  document.getElementById("error").textContent="";
+}
+
+function showWelcome(){
+  document.querySelectorAll(".chapterBtn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("unitLabel").textContent="Part A — Employability Skills";
+  document.getElementById("chapterTitle").textContent="KIPS AI 417 Study Hub";
+  document.getElementById("copyBtn").style.display="none";
+  document.getElementById("content").innerHTML=`
+    <div style="text-align:center;padding:90px 15px;color:#667085">
+      <div style="font-size:50px">📚</div>
+      <h2 style="color:#172b4d;margin-top:12px">Ready for your PPT</h2>
+      <p>Select any of the 10 chapters from the left.</p>
+      <p>Use <b>Copy Chapter</b> to copy the complete chapter into your presentation.</p>
+      <p>Use the search box to quickly find a chapter.</p>
+    </div>
+  `;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ---------------- CHAPTERS ---------------- */
+function openChapter(index){
+  const c=chapters[index];
+  document.getElementById("unitLabel").textContent=c.unit;
+  document.getElementById("chapterTitle").textContent=c.title;
+  document.getElementById("content").innerHTML=c.content;
+  document.getElementById("copyBtn").style.display="inline-block";
+
+  document.querySelectorAll(".chapterBtn").forEach(b=>b.classList.remove("active"));
+  const button=document.querySelector('.chapterBtn[data-index="'+index+'"]');
+  if(button) button.classList.add("active");
+
+  document.getElementById("progressWrap").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+  setTimeout(updateProgress,150);
+}
+
+function copyChapter(){
+  const text=document.getElementById("content").innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    const msg=document.getElementById("copyMsg");
+    msg.textContent="✅ Chapter copied!";
+    msg.style.display="block";
+    setTimeout(()=>msg.style.display="none",1600);
+  }).catch(()=>{
+    alert("Copy was blocked by the browser. Select the text manually and copy it.");
+  });
+}
+
+/* ---------------- SEARCH ---------------- */
+function filterChapters(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  document.querySelectorAll(".chapterBtn").forEach(btn=>{
+    const idx=Number(btn.dataset.index);
+    const hay=(chapters[idx].title+" "+chapters[idx].unit).toLowerCase();
+    btn.style.display=hay.includes(q)?"block":"none";
+  });
+}
+
+/* ---------------- PROGRESS ---------------- */
+function updateProgress(){
+  const el=document.getElementById("content");
+  const max=el.scrollHeight-el.clientHeight;
+  const pct=max<=0?100:(el.scrollTop/max)*100;
+  document.getElementById("progress").style.width=Math.min(100,Math.max(0,pct))+"%";
+}
+document.getElementById("content").addEventListener("scroll",updateProgress);
+
+/* ---------------- AUTO UNLOCK THIS SESSION ---------------- */
+/* Remove this block if you do NOT want the browser to remember
+   the unlocked state. */
+if(localStorage.getItem("kipsUnlocked")==="1"){
+  document.getElementById("lockScreen").style.display="none";
+  document.getElementById("app").style.display="block";
+  showWelcome();
+}
+</script>
+
+</body>
+</html>
